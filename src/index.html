@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Palindrome Checker</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main class="container">
+    <h1 class="title">Is it a Palindrome?</h1>
+    <div class="palindrome-div">
+        <label for="text-input"
+        >Enter in text to check for a palindrome:
+        </label>
+        <input class="palindrome-input" id="text-input" value="" type="text" />
+        <button class="palindrome-btn" id="check-btn">Check</button>
+        <div class="results-div hidden" id="result"></div>
+    </div>
+    <div class="palindrome-definition-div">
+        <p class="palindrome-definition">
+            <span role="img" aria-label="light-bulb">&#128161;</span>
+            A <dfn>palindrome</dfn> is a word or sentence that's spelled the same
+            way both forward and backward, ignoring punctuation, case, and
+            spacing.
+        </p>
+    </div>
+</main>
+<script>
+    const userInput = document.getElementById('text-input');
+    const checkPalindromeBtn = document.getElementById('check-btn');
+    const resultDiv = document.getElementById('result');
+
+    const checkForPalindrome = input => {
+        const originalInput = input; // Store for later output
+
+        if (input === '') {
+            alert('Please input a value');
+            return;
+        }
+
+        // Remove the previous result
+        resultDiv.replaceChildren();
+
+        const lowerCaseStr = input.replace(/[^A-Za-z0-9]/gi, '').toLowerCase();
+        let resultMsg = `<strong>${originalInput}</strong> ${
+            lowerCaseStr === [...lowerCaseStr].reverse().join('') ? 'is' : 'is not'
+        } a palindrome.`;
+
+        const pTag = document.createElement('p');
+        pTag.className = 'user-input';
+        pTag.innerHTML = resultMsg;
+        resultDiv.appendChild(pTag);
+
+        // Show the result.
+        resultDiv.classList.remove('hidden');
+    };
+
+    checkPalindromeBtn.addEventListener('click', () => {
+        checkForPalindrome(userInput.value);
+        userInput.value = '';
+    });
+
+    userInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            checkForPalindrome(userInput.value);
+            userInput.value = '';
+        }
+    });
+
+</script>
+</body>
+</html>
